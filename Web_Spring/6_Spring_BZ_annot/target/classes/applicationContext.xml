@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+    <context:component-scan base-package="com.my.biz.*"></context:component-scan>
+    <aop:aspectj-autoproxy ></aop:aspectj-autoproxy>
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property>
+        <property name="username" value="youngseo"></property>
+        <property name="password" value="1234"></property>
+    </bean>
+    
+    <!-- MyBatis 연동 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource"></property>
+         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+         <constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+    </bean>
+   
+    <!-- Spring JDBC 연동 JdbcTemplate -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+           <constructor-arg ref="dataSource"></constructor-arg>
+    </bean>
+    
+   <!--  <bean id="logAdvice" class="com.my.biz.comm.LogAdvice"></bean>
+    <aop:config>
+    	<aop:pointcut id="pp" 
+    				  expression="execution(* com.my.biz.user.service.UserService.get*(..))" />
+    	<aop:pointcut expression="execution(* com.my.biz.user.service.UserService.login(..))" id="pp2"/>
+    	<aop:aspect ref="logAdvice">
+    		<aop:before method="log" pointcut-ref="pp2"/>
+    		<aop:after-throwing method="log_ex" pointcut-ref="pp2" throwing="ex"/>
+    		<aop:after-returning method="log_return" pointcut-ref="pp2" returning="obj"/>
+    		<aop:after method="log_after" pointcut-ref="pp2" />
+    		<aop:around method="log_around" pointcut-ref="pp2" />
+    		
+    	</aop:aspect>
+    </aop:config> -->
+
+</beans>

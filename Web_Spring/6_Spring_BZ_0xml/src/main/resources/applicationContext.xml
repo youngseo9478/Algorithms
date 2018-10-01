@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+    
+    
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="oracle.jdbc.OracleDriver"></property>
+        <property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe"></property>
+        <property name="username" value="youngseo"></property>
+        <property name="password" value="1234"></property>
+    </bean>
+    
+    <!-- MyBatis 연동 -->
+    <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+         <property name="dataSource" ref="dataSource"></property>
+         <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+    </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+         <constructor-arg ref="sqlSessionFactoryBean"></constructor-arg>
+    </bean>
+    <bean id="mybatis" class="com.my.biz.user.dao.UserDAO_MyBatis">
+         <constructor-arg ref="sqlSession"></constructor-arg>
+    </bean>
+    <bean id="mybatis2" class="com.my.biz.user.dao.UserDAO_MyBatis_Interface" 
+                                                               init-method="init">
+         <constructor-arg ref="sqlSession"/>
+    </bean>
+   
+    <!-- Spring JDBC 연동 JdbcTemplate -->
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+           <constructor-arg ref="dataSource"></constructor-arg>
+    </bean>
+    <bean id="spring" class="com.my.biz.user.dao.UserDAO_Spring">
+           <constructor-arg ref="jdbcTemplate"></constructor-arg>
+    </bean>
+    
+    <!-- JDBC 연동 -->
+    <bean id="jdbc" class="com.my.biz.user.dao.UserDAO_JDBC"></bean>
+    
+    <bean id="userService" class="com.my.biz.user.service.UserServiceImpl">
+         <constructor-arg ref="mybatis2"></constructor-arg>
+    </bean>
+    
+    
+    <bean id="boardDAO_JDBC" class="com.my.biz.board.dao.BoardDAO_JDBC"></bean>
+    <bean id="boardDAO_Spring" class="com.my.biz.board.dao.BoardDAO_Spring">
+        <constructor-arg ref="jdbcTemplate"/>
+    </bean>
+    <bean id="boardDAO_MyBatis" class="com.my.biz.board.dao.BoardDAO_Mybatis">
+        <constructor-arg ref="sqlSession"/> 
+    </bean>
+    
+    <bean id="boardService" class="com.my.biz.board.service.BoardServiceImpl">
+        <constructor-arg ref="boardDAO_MyBatis"></constructor-arg>
+    </bean>
+
+</beans>

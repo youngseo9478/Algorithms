@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aop-reference-model>
+<aop-project name="6_Spring_BZ_0xml"/>
+<aop-project name="8_Spring_Web">
+<aspect-definition advice-class-name="org.springframework.transaction.interceptor.TransactionInterceptor" advice-method-name="invoke" advice-method-parameter-types="org.aopalliance.intercept.MethodInvocation" advice-type="AROUND" aspect-end-line-number="28" aspect-name="txAdvice" aspect-start-line-number="28" factory-id="org.springframework.ide.eclipse.aop.core.javaAdvisorDefinitionElementFactory" file="/8_Spring_Web/src/main/resources/tx.xml" pointcut-expression="execution(* tx.*Service.*(..))" proxy-target-class="false">
+<aop-reference advice-type="AROUND" bean="1:BeansModel|2:8_Spring_Web|3:src/main/resources/tx.xml|7:beans:10|8:txservice:10" bean-file="/8_Spring_Web/src/main/resources/tx.xml" bean-start-line="10" factory-id="org.springframework.ide.eclipse.aop.core.aopReferenceElementFactory" file="/8_Spring_Web/src/main/resources/tx.xml" source="=8_Spring_Web/C:\/Users\/student\/.m2\/repository\/org\/springframework\/spring-tx\/4.3.14.RELEASE\/spring-tx-4.3.14.RELEASE.jar&lt;org.springframework.transaction.interceptor(TransactionInterceptor.class[TransactionInterceptor~invoke~Lorg.aopalliance.intercept.MethodInvocation;" source-start-line="-1" target="=8_Spring_Web/src\/main\/java&lt;tx{UserService.java[UserService~userList" target-start-line="31"/>
+<aop-reference advice-type="AROUND" bean="1:BeansModel|2:8_Spring_Web|3:src/main/resources/tx.xml|7:beans:10|8:txservice:10" bean-file="/8_Spring_Web/src/main/resources/tx.xml" bean-start-line="10" factory-id="org.springframework.ide.eclipse.aop.core.aopReferenceElementFactory" file="/8_Spring_Web/src/main/resources/tx.xml" source="=8_Spring_Web/C:\/Users\/student\/.m2\/repository\/org\/springframework\/spring-tx\/4.3.14.RELEASE\/spring-tx-4.3.14.RELEASE.jar&lt;org.springframework.transaction.interceptor(TransactionInterceptor.class[TransactionInterceptor~invoke~Lorg.aopalliance.intercept.MethodInvocation;" source-start-line="-1" target="=8_Spring_Web/src\/main\/java&lt;tx{UserService.java[UserService~addUser~QUserVO;~Z" target-start-line="17"/>
+</aspect-definition>
+<aspect-definition advice-class-name="com.my.biz.comm.TimeCheckAdvice" advice-method-name="check(org.aspectj.lang.ProceedingJoinPoint)" advice-type="AROUND" aspect-end-line-number="12" aspect-name="timeCheckAdvice" aspect-start-line-number="12" factory-id="org.springframework.ide.eclipse.aop.core.annotationAspectDefinitionElementFactory" file="/8_Spring_Web/src/main/resources/applicationContext.xml" pointcut-expression="com.my.biz.comm.AnnotAdvice.point2()" proxy-target-class="false">
+<aop-reference advice-type="AROUND" bean="1:BeansModel|2:8_Spring_Web|3:src/main/resources/tx.xml|7:beans:10|7:beans:10|8:userService:10" bean-file="/8_Spring_Web/src/main/resources/applicationContext.xml" bean-start-line="10" factory-id="org.springframework.ide.eclipse.aop.core.aopReferenceElementFactory" file="/8_Spring_Web/src/main/resources/tx.xml" source="=8_Spring_Web/src\/main\/java&lt;com.my.biz.comm{TimeCheckAdvice.java[TimeCheckAdvice~check~QProceedingJoinPoint;" source-start-line="24" target="=8_Spring_Web/src\/main\/java&lt;com.my.biz.user.service{UserServiceImpl.java[UserServiceImpl~login~QString;~QString;" target-start-line="37"/>
+</aspect-definition>
+</aop-project>
+<aop-project name="3_DAO_maven"/>
+<aop-project name="startPrj3_oracle"/>
+<aop-project name="7_Spring_Web"/>
+<aop-project name="6_Spring_BZ_annot">
+<aspect-definition advice-class-name="com.my.biz.comm.TimeCheckAdvice" advice-method-name="log_around(org.aspectj.lang.ProceedingJoinPoint)" advice-type="AROUND" aspect-end-line-number="11" aspect-name="timeCheckAdvice" aspect-start-line-number="11" factory-id="org.springframework.ide.eclipse.aop.core.annotationAspectDefinitionElementFactory" file="/6_Spring_BZ_annot/src/main/resources/applicationContext.xml" pointcut-expression="com.my.biz.comm.AnnotAdvice.point2()" proxy-target-class="false">
+<aop-reference advice-type="AROUND" bean="1:BeansModel|2:6_Spring_BZ_annot|3:src/main/resources/applicationContext.xml|7:beans:10|8:userService:10" bean-file="/6_Spring_BZ_annot/src/main/resources/applicationContext.xml" bean-start-line="10" factory-id="org.springframework.ide.eclipse.aop.core.aopReferenceElementFactory" file="/6_Spring_BZ_annot/src/main/resources/applicationContext.xml" source="=6_Spring_BZ_annot/src\/main\/java&lt;com.my.biz.comm{TimeCheckAdvice.java[TimeCheckAdvice~log_around~QProceedingJoinPoint;" source-start-line="22" target="=6_Spring_BZ_annot/src\/main\/java&lt;com.my.biz.user.service{UserServiceImpl.java[UserServiceImpl~login~QString;~QString;" target-start-line="35"/>
+</aspect-definition>
+</aop-project>
+<aop-project name="6_Spring_BZ_xml"/>
+<aop-project name="BookReport"/>
+<aop-project name="5_Spring_IOC"/>
+</aop-reference-model>

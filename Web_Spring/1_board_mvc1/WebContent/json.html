@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jQuery ajax add</title>
+<style type="text/css">
+#msg {
+	width: 400px;
+	height: 70px;
+	background-color: gray;
+}
+
+.w {
+	border: 1px solid blue;
+	background-color: red;
+}
+</style>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$('#btn1').click(function(){ 
+		$('#msg1').html("ajax 통신 .....");
+		
+		var url = 'json.do';
+		$.get(url, function() {        
+	        $.each(JSON.parse(responseJson), function() {    
+	            alert($(this).text(${}))
+	        	/* $("#msg1")
+	                .append($("<p>").html(product[index]));  */
+	        });
+	    });
+		
+	});
+	
+	$('#add').click(function(){
+		$('#div1').addClass("w");
+	});
+	
+	$('#remove').click(function(){
+		$('#div1').removeClass("w");
+	});
+	
+});
+
+</script>
+</head>
+<body>
+	<h1>jQuery ajax add..</h1>
+
+	<button id="btn1">ajax 요청</button>
+	<div id="msg1"></div>
+	<br>
+	<br>
+	<div id="msg2"></div>
+
+
+	<div id="div1">
+		<p>예제 단락입니다.</p>
+	</div>
+	<button id="add">addClass</button>
+	<button id="remove">removeClass</button>
+</body>
+</html>
+
+
+
+
+
+
+

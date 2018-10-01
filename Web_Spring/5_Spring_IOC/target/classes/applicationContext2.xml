@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+	
+	<bean id="sony" class="tv.step3.SonySpeaker"></bean>
+	<bean id="apple" class="tv.step3.AppleSpeaker"></bean>
+	
+	<bean id="samsung" class="tv.step3.SamsungTV" >
+		<constructor-arg ref="sony"></constructor-arg>
+	</bean>
+	
+	<bean id="lg" class="tv.step3.LgTV" >
+	<!-- 인젝션하는 두가지 방법 1. 생성자 인젝션  2.set프로퍼티 인젝션 -->
+		<constructor-arg ref="apple"></constructor-arg>
+		<!-- Set Property 이용해서 스피커를 선택할 수도 있음 물론 생성자함수가 더 먼저 수행되고 난 후에 수행됨 -->
+		<property name="speaker" ref="sony"></property> 
+	</bean>
+	
+	<bean id="user1" class="tv.step3.UserVO">
+	<!-- String은 new를써서 생성하기도 하고 그냥 쓰기도 함 그냥 쓰는건 primitive방식! 
+	인젝션 할때도 프리미티브 방식으로 해야 편리하다! new를 쓰는건 ref로 안쓰는건 value로  -->
+		<constructor-arg value="java01"></constructor-arg>
+		<constructor-arg value="홍길동"></constructor-arg>
+		<constructor-arg value="1234"></constructor-arg>
+		<constructor-arg value="User"></constructor-arg>
+	</bean>
+	<bean id="user2" class="tv.step3.UserVO">
+		<constructor-arg name="id" value="java02"></constructor-arg>
+		<constructor-arg name="pw" value="1111"></constructor-arg>
+		<constructor-arg name="role" value="admin"></constructor-arg>
+		<constructor-arg name="name" value="김길동"></constructor-arg>
+	</bean>
+	<bean id="user3" class="tv.step3.UserVO" p:id="java03"
+											 p:name="고길동"
+											 p:role="user"
+											 ></bean><!-- set기반은 생성자 매개변수랑 개수달라도 됨 마음대로! -->
+											 
+	<bean id="user4" class="tv.step3.UserVO" c:id="java04"
+											 c:name="박길동"
+											 c:pw="3333"
+											 c:role="admin"></bean><!-- 얘는 생성자랑 맞아야함 -->										
+	
+</beans>

@@ -1,0 +1,98 @@
+2018/02/09
+
+					BeanFactory
+						
+						↑
+
+@Component,			ApplicationContext		applicationContext.xml		(Biz)
+@Service, Repository	
+
+						↑
+@Controller			WebApplicationContext		action-servlet.xml		(web)
+
+							DispatcherServlet		web.xml
+							(모든 흐름 처리 담당)
+
+
+
+<실습 prj. 7_Spring_Web>
+# new src/main/webapp/index.html
+
+# web.xml
+	<init-param> 주석 풀기
+	<param-value>/WEB-INF/action-servlet.xml</param-value>
+
+# controller
+	new com.my.web.controller.UserController
+
+# prj. 6_Spring_BZ_annot 의 소스 가져오기
+	src/main/java (모두)
+	src/main/resources
+		mapper, applicationContext.xml, dbinfo.properties, mybatis-config.xml
+	src/test/java (모두)
+	
+# pom.xml 수정
+
+# src/test/resources
+	log4j.xml 삭제
+
+
+# web.xml
+	<context-param> 주석 풀기
+	<param-value>classpath:applicationContext.xml</param-value>
+	
+# 필터 등록
+	new filter (com.my.web.controller.TestFilter)
+	filter mappings - edit
+		/*
+	
+	web.xml -> <display-name>TestFilter</display-name> 부분 수정
+    	<display-name>EncodingFilter</display-name>
+    	<filter-name>EncodingFilter</filter-name>
+    	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    	<init-param>
+    		<param-name>encoding</param-name>
+    		<param-value>utf-8</param-value>
+    	</init-param>
+    	
+    	TestFilter 삭제
+			filter-class full path 얻기 위해 사용했음
+
+
+<Controller 테스트 환경 구축>
+# com.my.util.JDBCUtil
+ 	String fileName -> 절대주소로 변경
+ 
+# new package
+ 	src/test/java/controller
+
+# new other - junit - junitTestCase - UserControllerTest01
+	라이브러리 필요 -> pom.xml
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>test</scope>
+		</dependency>
+	hellodo(), listdo() 테스트
+
+# \\M901INS\fileserver\11.Spring\view\user 폴더
+	src/main/webapp/WEB-INF/views/ 에 붙여넣기
+
+# \\M901INS\fileserver\11.Spring\view\
+	html 문서들
+	src/main/webapp 에 붙여넣기
+
+# UserController
+
+<과제시간>
+board Controller 만들기
+		
+	
+		
+		
+
+ 
+ 
+  
+
