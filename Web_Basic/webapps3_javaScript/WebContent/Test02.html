@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>java script</title>
+<script type="text/javascript">
+function hello(){
+	return 'Hello';
+}
+function world(){
+	return '~~world';
+}
+function getMsg(){
+	var h = hello();
+	var w = world();
+	document.getElementById('msg').setAttribute('value',h+w); 
+}
+</script>
+</head>
+
+<body>
+<button id="btn1" onclick="getMsg()">Button1</button><!-- 버튼눌를때 getMSG호출 -->
+<input type="text" id="msg" disabled="disabled">
+</body>
+</html>

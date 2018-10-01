@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#text').click(function() {
+			alert($('#result').text());
+			$('#result').text("안녕하세요 저는 <b>jQuery</b> 입니다.");
+		});
+		$('#html').click(function() {
+			alert($('#result').html());
+			$('#result').text("안녕하세요 저는 <b>jQuery</b> 입니다.");
+		});
+		$('#val').click(function() {
+			alert($('#name').html());
+			$('#name').text("나는 홍길동");
+		});
+		$('#imgbtn').click(function() {
+			alert($('#img').attr('src'));
+			$('#img').attr('src', './images/intro_flower.png');
+		});
+	});
+</script>
+</head>
+<body>
+	<p id="result">
+		여기는 <strong>단락</strong>입니다.
+	</p>
+	<button id="text">text()</button>
+	<button id="html">html()</button>
+	<button id="val">val()</button>
+	<button id="imgbtn">img()</button>
+	<img id="img" alt=""  src="./imagesrss.png" width="120" height="120">
+
+</body>
+
+</button>
+</br>
+
+<input type="text" id="name" value="이름입력 바람">
+
+</html>

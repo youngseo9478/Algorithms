@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('input').on({
+		focus:function(e){
+			$(this).css("background-color","yellow");
+		},
+		blur:function(e){
+			$(this).css("background-color","green");
+			
+		}
+		
+	});
+});
+</script>
+</head>
+<body>
+아이디:<input type="text" name="id" name="id">
+</body>
+</html>

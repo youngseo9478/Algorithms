@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<title>Insert title here</title>
+<head>
+<script> type ="text/javascript"> function sum (a,b,c){
+var sum = 0;
+sum = a+b+c;
+return sum;
+}
+function sumall(){
+var sum =0
+
+for(var i = 0;i<arguments.lenght;i++){
+sum += arguments[i];
+}
+return sum;
+
+}
+var callback = function(){
+	alert("cllback() 함수 수행~~~");
+}
+function calltentime(a){
+	for(var i =0 ; i<10;i++){
+		a()
+		
+	}
+}
+/*
+calltentime(callback);
+calltentime(callback = function(){console.log("~~~~~");});
+calltentime(callback = function(){alert("~~~~~");});
+calltentime(function(){
+	var name = "홍길동";
+	alert(name);
+	
+	
+	
+});
+*/
+function f1(){
+	return function(){
+		clnsole.log("f1() 이 리턴한 함수");
+	};
+	
+}
+/*var callback = funtion(){
+	alert("cllback() 함수 수행~~~");
+};
+*/
+/*
+var f = f1();
+f();
+f1()();
+*/
+//p394
+/*
+var i = setInterval(function(){
+	console.log(new Date().toLocaleString());
+},1000);
+
+setTimeout(function() {
+	clearInterval(i)
+}, 5000)
+*/
+
+
+
+
+// 클로저
+
+var f5 = function count1(){
+    var data = 0;
+	function f1(){
+		return data++;
+		
+	};
+	
+	return f1;
+};
+var f4 = (function count(){
+    var data = 0;
+	function f1(){
+		return data++;
+		
+	};
+	
+	return f1;
+})();
+
+</script>
+<meta charset="UTF-8">
+</head>
+<body>
+
+</body>
+</html>

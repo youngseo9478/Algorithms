@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Jquery ajax add</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$('#btn1').click(function() {
+			$.ajax({
+				url : 'add.jsp?p1=' + $('#p1').val() + "&p2=" + $('#p2').val(),
+				type : 'GET',
+				dataType : 'json',
+				success : function(data,result) {
+					$('#msg').html('ajax suceess');
+					$('#result').val(data.result);
+				},
+				error : function(error, ststus) {
+					$('#msg').html('ajax erorr ' + error.name);
+				}
+			});
+			
+		});
+
+		$('#add').click(function() {
+			$('#div1').addClass("w");
+		});
+		$('#picture').click(function() {
+			$('#msg').append("<img src='../images/rss.png'>")
+		});
+
+		$('#remove').click(function() {
+			$('#div1').removeClass("w");
+		});
+
+	});
+</script>
+
+<style type="text/css">
+#msg {
+	width: 100px;
+	height: 70px;
+	background-color: gray;
+}
+
+.w {
+	background-color: red;
+	border: 1px solid blue;
+}
+</style>
+</head>
+<body>
+	<h1>JQuery ajax add..</h1>
+	<form action="">
+		<input type="text" id="p1" name="p1">+ <input type="text"
+			id="p2" name="p2">= <input type="text" id="result"
+			name="result">
+
+
+
+	</form>
+	<button id="btn1">ajax 요청</button>
+	<div id="msg"></div>
+	<br>
+	<br>
+	<div id="div1">
+		<p>예제입니다</p>
+	</div>
+	<button id="add">addclass</button>
+	<button id="remove">removeclass</button>
+	<button id="picture">그림 출력</button>
+</body>
+</html>
+.

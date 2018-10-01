@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<server>
+<id>tomcatServer</id>
+<username>admin</username>
+<password>1234</password>
+
+</server>
+
+<!-- setting.xml   .m2/setting.xml -->
+<!-- run as /maven build / goal => tomcat:deploy -->

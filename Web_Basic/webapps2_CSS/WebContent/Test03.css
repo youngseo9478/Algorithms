@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+#header{
+text-align: center;
+}
+#footer{
+ color: blue;
+ text-decoration: underline;
+ text-align: right;
+}
+.a{
+	color : red;
+	font-style: oblique;
+}
+.b{
+	color : green;
+	font-style: inherit;
+	border: 1px solid blue;
+}

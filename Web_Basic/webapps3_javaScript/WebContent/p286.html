@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+var now= new Date();
+
+var object = {
+		s: "Hello",
+		n: "99",
+		b: this.n > 100, /* 그냥 n일때는 오류가 나지만 this로 받으면 오류가 안남,object 변수는 꼭 주소가 필요함 */
+		now : new Date(),	
+		sayhello:function(){
+			var name="홍길동";
+			console.log("s"+"=>"+this.n+this.b+this.now+":"+name);
+			console.log("b"+"=>"+TypeError(this.b)); /* B의 타입 체크 */
+			console.log("s"+"=>"+TypeError(this.s)); /* s의 타입 체크 */
+			console.log("now"+"=>"+TypeError(this.now)); /* now의 타입 체크 */
+			
+		}
+		
+		
+}
+
+/* eval(10-7)
+3
+var num =10;
+undefined
+num
+10
+eval(num++)
+10
+eval(++num)
+12
+num
+12
+num(num++)
+VM631:1 Uncaught TypeError: num is not a function
+    at <anonymous>:1:1
+(anonymous) @ VM631:1
+eval(num++)
+13
+num
+14
+var n1 = 9
+undefined
+var n2= 99
+undefined
+var max = n1 > n2 ? n1 : n2
+undefined
+max */
+99
+
+
+</script>
+</head>
+<body>
+
+</body>
+</html>

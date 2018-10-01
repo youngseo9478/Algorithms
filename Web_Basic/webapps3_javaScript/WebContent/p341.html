@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript">
+//생성자를통한 객체생겅
+
+function Student(name,ko,math){
+	this.name = name;
+	this.ko = ko;
+	this.math=math;
+
+}
+Student.prototype.sum = function(){
+	return this.ko + this.math
+}
+Student.prototype.avg= function(){
+	return this.sum()/2;
+}
+var s1 = new Student("홍길동",99,99);
+var s2 = new Student("고길동",88,88);
+
+Student.prototype.grade= function(){
+	var data = this.avg();
+	return data >= 90? 'A':(data >=80 ? 'B':'F');
+}
+s2.toString =function(){
+	return this.name +":"+this.avg()+":"+this.grade();
+}
+
+
+</script>
+<title>프로토 타입</title>
+</head>
+<body>
+
+</body>
+</html>

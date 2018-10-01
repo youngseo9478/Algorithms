@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#result{
+	with: 600px;
+	height: 100px;
+	overflow: scroll;
+	
+}
+#msg{
+font:12px bold;
+border: 1px solid red;
+width: 150px;
+}
+
+
+</style>
+<script type="text/javascript">
+
+function addTag(tagName){
+	var newT =document.createElement(tagName);
+	var node =document.createTextNode("제목~~~~");
+	newT.appendChild(node);
+	document.getElementById('result').appendChild(newT);
+}
+function removeTag(tagName){
+	var a = document.getElementById('result').getElementsByTagName(tagName)
+	if(a.length != 0)
+	document.getElementById("result").removeChild(a[a.length-1]);
+
+}
+
+
+</script>
+</head>
+<body>
+<div id ="result">
+<button onclick="addTag('h1')"> 추가</button>
+
+<div id= "msg" onclick="addText('동적 추가 텍스트~~~')"> 여기를 클릭하세요 </div>
+ 
+</div>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>jquery aJax</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$('#btn1').click(function(){
+		$('#demo').load("data.txt");
+	});
+});
+</script>
+</head>
+<body>
+<div id="demo">
+  <h2>Let AJAX change this text</h2>
+  <button id="btn1"type="button" ">Change Content</button>
+  <button>button</button>
+  
+</div>
+</body>
+</html>
