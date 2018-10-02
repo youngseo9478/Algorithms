@@ -1,6 +1,0 @@
-bun irum  bir
-10  hong  2001
-11  park  2003
-12  kim   2005
-13  choi  2003
- 
