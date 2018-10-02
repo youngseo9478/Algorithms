@@ -1,0 +1,117 @@
+2018/03/05 : 리눅스
+
+<파일 허가권 p196>
+touch ttt.txt
+ls -al ttt*
+
+chmod u+x ttt.txt
+ls -al ttt*
+	소유자 권한
+
+chmod g+wx ttt.txt
+ls -al ttt*
+	그룹 권한
+	
+chmod o-r ttt.txt
+ls -al ttt*
+	그 외 사용자 권한
+
+
+
+<파일 소유권 p197>
+touch test
+chmod 755 test
+ls -al test
+
+chown centos test
+	test 파일의 소유권을 centos 로 변경
+ls -al test
+
+
+chgrp centos test
+	test 파일의 그룹을 centos 로 변경
+ls -al test
+
+
+p198
+whoami
+./test
+
+
+
+<파일 유형>
+파일 : -
+디렉토리 : d
+블록디바이스 : b
+	하드디스크, CD/DVD
+문자디바이스 : c
+	마우스, 프린터, 키보드
+링크 : l
+
+
+
+<파일 유형 확인하기>
+
+ls -l /dev | more
+	dev → 디바이스가 들어있는 방
+
+
+<Link>
+cat /etc/shadow
+	일방 암호 알고리즘
+
+
+
+<Hard link> p201
+cat > 1.txt
+	> -> redirection (방향을 바꾼다)
+aaaaa
+	aaaaa 라는 글자가 저장된다.
+^Z (Ctrl + Z)
+
+cat 1.txt
+ls -al 1.txt
+	-rw-r--r--. 1 root root 7  3월  5 11:24 1.txt
+	1 → 현재 연결 고리가 1개 (다른 것과 연결되지 않고 나 혼자만)
+
+ln 1.txt 2.txt
+ls -al
+	2개 파일 연결된 것 확인할 수 있음
+
+ln 2.txt 3.txt
+ls -al
+	3개의 파일이 연결된 것 확인할 수 있음
+	1.txt, 2.txt, 3.txt
+
+	상대방에게 원본 파일을 알리기 싫을 때, 같은 파일을 링크 식으로 만들어서 사용
+	상대에게는 2.txt나 3.txt에 접근하게끔 한다.
+
+
+cat >> 1.txt
+yyyyyy
+^Z
+
+cat 2.txt
+cat 3.txt
+	1.txt 에 수정한 내용이 2.txt 와 3.txt에 적용된다.
+
+
+rm 3.txt
+	3.txt 삭제
+al -al
+	1.txt와 2.txt 는 남아있다.
+	각 파일의 링크 수는 2로 변경되었다.
+
+
+
+<soft link>
+mkdir babo
+	babo 디렉토리 생성
+cd babo
+mkdir ondal
+	babo 내부에 ondal 디렉토리 생성
+cd ondal
+cd
+ln -s babo/ondal kongjoonamchin
+
+

@@ -1,0 +1,50 @@
+0403
+
+[hadoop@s1 ~]$ hdfs dfs -mkdir /emp_dept
+[hadoop@s1 ~]$ hdfs dfs -mkdir /emp_dept/in
+주의 ! 폴더를 생성할 때는 연속된 것을 두번 만들어줘야 함
+
+[hadoop@s1 ~]$ hdfs dfs -copyFromLocal emp.csv /emp_dept/in
+[hadoop@s1 ~]$ hdfs dfs -copyFromLocal dept.csv /emp_dept/in
+파일을 이동
+
+[hadoop@s1 ~]$ hdfs dfs -ls /emp_dept/in/
+파일 확인
+
+
+
+pig다운로드
+[root@s1 ~]# wget http://mirror.apache-kr.org/pig/pig-0.17.0/pig-0.17.0.tar.gz
+압축풀기
+
+[root@s1 ~]# tar -xzf pig-0.17.0.tar.gz
+
+압축 풀린 파일을 이동시키자
+[root@s1 ~]# mv pig-0.17.0 /data/hadoop/
+
+[hadoop@s1 ~]$ vi .bashrc
+
+export PIG_HOME=/data/hadoop/pig-0.17.0
+export HADOOP_CONF_DIR=/data/hadoop/hadoop-2.8.2/etc/hadoop/
+export PATH=${PATH}:${PIG_HOME}/bin
+
+다 입력 후 :wq
+
+[hadoop@s1 ~]$ source .bashrc
+로 환경변수 적용시킴
+
+[hadoop@s1 ~]$ pig -x local
+이건 로컬로 돌리는건데
+하둡에서 돌리기 위해선
+먼저
+
+[hadoop@s1 ~]$ mr-jobhistory-daemon.sh start historyserver
+starting historyserver, logging to /data/hadoop/hadoop-2.8.2/logs/mapred-hadoop-historyserver-s1.out
+로 히스토리서버를 켠 다음
+
+[hadoop@s1 ~]$ pig
+로 실행
+
+grunt> emp = LOAD '/emp_dept/in/emp.csv' using PigStorage(',') as (empno : int, ename : chararray, job : chararray, mgr : int, hiredate : chararray, sal : int, comm : int, deptno : int);
+
+

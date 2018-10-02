@@ -1,0 +1,180 @@
+2018/02/27
+
+<Vmware 설치 후 선 작업(p68)>
+rundll32.exe
+	dll 가동 명령어
+vmnetui.dll
+	network editor 가동 명령어
+	운영체제가 %1을(를) 실행할 수 없습니다 에러
+		→ 경로명과 함께 입력
+		→ C:\Program Files (x86)\VMware\VMware Player\vmnetui.dll
+
+
+<가상머신 생성(Server)(p.86)>
+
+
+<가상머신 수정>
+cf. 시스템 메모리 확인 -> window 버튼 + pause 버튼
+* Home 아래 "Server" 등을 선택 후 우측 아래 Edit Virtual machine 선택
+* usb, printer, sound 등
+	guest와 충돌될 수 있음
+	-> 하단 remove 눌러 삭제
+* 메모리
+	서버 하나만 설치 시 4G로 (물론 나중에 올려도 ok)
+		(8G 시 4기가로 하면 good)
+	만일 호스트와 게스트 4대를 동시에 가동하려면 512mb나 256mb 를 적당히 부여
+
+
+<가상머신 변경>
+* 가상머신 목록에서 제거
+	server 선택 - remove VM from Library
+* 가상머신 다시 오픈
+	우측 창 - open a virtual machine - 클릭
+	C:\CentOS\Server
+	CentOS64-bit.vmx 클릭
+	단, 다른 폴더로 이동했을 경우 "I moved it" 을 클릭해야 정상 가동
+
+
+<가상머신 종료>
+player - power - 
+	power off
+		→ 윈도우 종료와 같음
+		→ on : ipl (initial program loader) 작업
+	suspend
+		→ 현재 설정 그대로 두고 끈다.
+		→ on : 작업한 순간까지를 그대로 올려준다.
+cf. 진행 시 잘 안되면 esc
+	커서가 잘 안되면 ctrl+alt
+	리눅스 한글은 윈도우키+스페이스
+
+
+<CentOS 리눅스 설치> p86
+
+
+
+<설치 후 추가 변경>
+프로그램 - 즐겨찾기 - 터미널
+
+uname -a
+pwd
+	현재 위치
+cd /bin
+ls
+	파일 확인
+ps
+ps -ef
+cd /dev
+ls
+cat /etc/passwd
+	비밀번호 x로 표시 -> 일방암호 알고리즘
+		admin 도 알아낼 수 없다.
+
+cd /etc/yum.repos.d/
+	cf. 자동완성 기능 -> yum. 입력 후 tab 키
+ls
+
+gedit CentOS-Base.repo
+	cf. vi, geditg
+
+	cf. 리눅스 주석 -> #
+
+주석처리
+#released updates 
+# [updates]
+# name=CentOS-$releasever - Updates
+# mirrorlist=http://mirrorlist.centos.org/?release=$releasever&arch=$basearch&repo=updates
+#baseurl=http://mirror.centos.org/centos/$releasever/updates/$basearch/
+# gpgcheck=1
+# gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+
+gedit CentOS-Sources.repo
+주석처리
+#released updates 
+#[updates-source]
+#name=CentOS-$releasever - Updates Sources
+#baseurl=http://vault.centos.org/centos/$releasever/updates/Source/
+#gpgcheck=1
+#enabled=0
+#gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
+
+
+su -
+	super user. admin 의 home 방으로 이동 (/root)
+pwd
+	/root
+
+cd /etc/yum.repos.d/
+	방 위치 이동 (확실하게 이동하기 위해서)
+
+mv CentOS-Base.repo CentOS-Base.repo.bak
+	업데이트 방지 위해 이름 바꾸기
+	cf. mv : 이름 바꾸는 명령어
+ls
+	이름 변경 확인 가능
+wget http://download.hanbit.co.kr/centos/7/CentOS-Base.repo
+
+	
+cf. chmod : 권한 설정에 굉장히 중요
+	ls -al
+	drwxr-xr-x.
+		d : directory (폴더명이다)
+		- 시작 : 파일
+
+	rwx 		rwx 		rwx
+	나	내가 속한 그룹		other
+
+	rwx
+		read
+		write
+		execute
+
+chmod 644 *
+ls -al
+rm -f
+
+cf. 	4+2+1	4+2+1	4+2+1
+	rwx	rwx	rwx	counter
+	7	7	7
+
+	rwx	r--	r--
+	7	4	4
+
+	rw-	r--	r--
+	6	4	4
+
+	chmod 644 * -> 644로 설정
+
+cf. ~ : 수정했을 때 생성되는 파일 (원파일)
+
+rm *.repo~
+ctrl + c (강제 취소)
+rm -f *.repo~
+	rm -f *.repo~ 는 묻지 않고 삭제
+
+ls
+
+yum clean all
+	기존 저장소 목록 지우기
+
+* server IP주소 192.168.111.100으로 변경하기
+cd /etc/sysconfig/network-scripts/
+ls
+	ifcfg-ens33 확인 (이더넷 이름 확인)
+gedit ifcfg-ens33
+	ifcfg-ens33 은 네트워크카드명
+	
+주석 및 내용 추가
+#BOOTPROTO="dhcp"
+BOOTPROTO=none
+IPADDR=192.168.111.100
+NETMASK=255.255.255.0
+GATEWAY=192.168.111.2
+DNS1=192.168.111.2
+ONBOOT="yes"
+
+systemctl restart network
+	시스템 리스타트
+ifconfig ens33
+systemctl status network
+	(참고) /etc/init.d/network restart

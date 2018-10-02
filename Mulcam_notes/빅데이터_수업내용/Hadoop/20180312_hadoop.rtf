@@ -1,0 +1,359 @@
+{\rtf1\ansi\ansicpg949\deff0\deflang1033\deflangfe1042{\fonttbl{\f0\fnil\fcharset129 \'b8\'bc\'c0\'ba \'b0\'ed\'b5\'f1;}}
+{\colortbl ;\red255\green0\blue0;\red0\green77\blue187;\red0\green0\blue255;\red0\green176\blue80;}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang18\b\f0\fs20 2018/03/12(\'bf\'f9)\par
+\b0 < \'c7\'cf\'b5\'d3 \'bf\'a1\'c4\'da \'bd\'c3\'bd\'ba\'c5\'db > p32\par
+* hadoop framework\'b8\'a6 \'b1\'b8\'bc\'ba\'c7\'cf\'b4\'c2 \'bf\'a9\'b7\'af sub-project \'b5\'e9\'c0\'c7 \'c1\'fd\'c7\'d5\par
+* \'bf\'f8\'b7\'a1 hadoop\'c0\'ba \'ba\'d0\'bb\'ea\'c3\'b3\'b8\'ae+\'bf\'eb\'b7\'ae\'c0\'bb \'c8\'ae\'c0\'e5 \'b0\'a1\'b4\'c9\'c7\'d1 HDFS file system\'bf\'a1 \'c0\'da\'b7\'e1\'b8\'a6 \'c0\'fa\'c0\'e5\'c7\'d1 \'c8\'c4 MapReduce \'bf\'ac\'bb\'ea\'c0\'bb \'c7\'cf\'bf\'a9 \'b0\'e1\'b0\'fa\'b8\'a6 \'b1\'b8\'c7\'cf\'b4\'c2 \'b9\'e6\'b9\'fd\'c0\'bb \'bb\'e7\'bf\'eb\par
+* \'b1\'d7\'b7\'b1\'b5\'a5 \'c7\'cf\'b5\'d3\'c0\'c7 MapReduce\'c0\'c7 \'b4\'dc\'c1\'a1\'c0\'b8\'b7\'ce\'b4\'c2 \'bc\'d3\'b5\'b5\'b0\'a1 \'b4\'c0\'b8\'ae\'b0\'ed \'c6\'ed\'b8\'ae\'bc\'ba\'c0\'cc \'b6\'b3\'be\'ee\'c1\'f8\'b4\'d9.\par
+* \'c0\'cc\'b7\'b1 MapReduce\'c0\'c7 \'b4\'dc\'c1\'a1\'c0\'bb \'ba\'b8\'bf\'cf\'c7\'d1 \'bf\'a9\'b7\'af \'c7\'c3\'b7\'a7\'c6\'fb\'c0\'cc \'b4\'eb\'b5\'ce\'b5\'ca\par
+* \'c7\'cf\'b5\'d3\'c0\'c7 \'b1\'e2\'c1\'b8 HDFS \'b9\'d7 MapReduce\'bf\'a1 \'ba\'b8\'bf\'cf\'c0\'fb\'c0\'ce \'bc\'ad\'ba\'ea\'c7\'c1\'b7\'ce\'c1\'a7\'c6\'ae\'b5\'e9\'c0\'cc \'b9\'ad\'be\'ee\'c1\'ae \'b5\'c8 \'bc\'d6\'b7\'e7\'bc\'c7\par
+\par
+\par
+< Hive\'b6\'f5? >\par
+* \'b1\'e2\'c1\'b8 \'bb\'e7\'bf\'eb\'c7\'cf\'b4\'f8 SQL \'b5\'ee\'c0\'bb \'b1\'e2\'b9\'dd\'c0\'b8\'b7\'ce \'c7\'cf\'b4\'c2 Apache Hive\'b8\'a6 \'b8\'bb\'c7\'cf\'b8\'e7 SQL(HiveQL) + \'c0\'da\'b7\'e1\'c3\'b3\'b8\'ae\'b8\'a6 \'c0\'a7\'c7\'d1 \'bf\'c0\'c7\'c2\'bc\'d2\'bd\'ba\'b7\'ce FaceBook\'c0\'cc \'b0\'b3\'b9\'df\par
+\tab (\'b4\'dc, Hive\'c0\'c7 SQL\'c0\'ce HiveQL\'c0\'c7 \'b9\'ae\'b9\'fd\'c0\'ba ansi \'b1\'d4\'c1\'a4\'b0\'fa\'b4\'c2 \'b4\'d9\'b8\'a3\'b4\'d9.)\par
+*  Map-Reduce \'c0\'db\'be\'f7\'c0\'ba \'b1\'e2\'ba\'bb\'c0\'fb\'c0\'b8\'b7\'ce low-level java api \'c7\'fc\'c5\'c2\'c0\'c7 \'c0\'db\'be\'f7\'c0\'b8\'b7\'ce \'bd\'b1\'c1\'f6 \'be\'ca\'c0\'ba \'c0\'db\'be\'f7\'c0\'cc\'b4\'d9.\par
+* \'b1\'d7\'b7\'af\'b9\'c7\'b7\'ce Hive\'bf\'a1\'bc\'ad SQL\'b0\'fa \'c0\'af\'bb\'e7\'c7\'d1 hiveql\'c0\'c7 \'c0\'da\'b7\'e1\'b8\'a6 MapReduce\'b7\'ce \'ba\'af\'c8\'af\'c7\'d8 \'c1\'d6\'b9\'c7\'b7\'ce \'b0\'e1\'b1\'b9 Hive\'b4\'c2 \'c7\'cf\'b5\'d3\'c0\'c7 MapReduce\'ba\'ce\'ba\'d0\'c0\'bb \'b4\'e3\'b4\'e7\'c7\'cf\'b4\'c2 \'bf\'aa\'c7\'d2\'c0\'bb \'c7\'d1\'b4\'d9.\par
+* Hive\'b4\'c2 Data Warehouse \'c3\'b3\'b8\'ae\'bf\'cd \'b9\'d0\'c1\'a2\'c7\'cf\'b4\'d9.\par
+* (\'c2\'fc\'b0\'ed) DW\'c0\'c7 \'c6\'af\'c2\'a1 : \'b5\'a5\'c0\'cc\'c5\'cd\'c0\'c7 \'ba\'af\'bc\'ba\'c0\'cc \'c0\'fb\'b0\'ed \'c0\'c0\'b4\'e4\'bd\'c3\'b0\'a3\'c0\'cc \'b1\'e6\'be\'ee\'b5\'b5 \'bb\'f3\'b0\'fc \'be\'f8\'b4\'d9.\par
+\par
+\par
+* (\'c2\'fc\'b0\'ed) Data Warehouse vs Bigdata\par
+** \b DW\b0\'b4\'c2 \'be\'ee\'b4\'c0 \'c1\'f6\'c1\'a1\'bf\'a1\'bc\'ad\'c0\'c7 \b snapshot\b0  \'c0\'fa\'c0\'e5 \'b9\'e6\'bd\'c4\'c0\'b8\'b7\'ce \'c0\'cc\'c0\'fc \'b5\'a5\'c0\'cc\'c5\'cd\'b8\'a6 \'bf\'ac\'b0\'e1\'c1\'f6\'be\'ee \'c0\'e7\'c6\'f2\'b0\'a1\'c7\'cf\'b4\'c2 \'b0\'cd\'c0\'cc \'be\'ee\'b7\'c6\'b4\'d9.\par
+** \b Bigdata\b0\'b4\'c2 \b historical\b0  \'c0\'fa\'c0\'e5\'b9\'e6\'bd\'c4\'c0\'bb \'c5\'c3\'c7\'cf\'b9\'c7\'b7\'ce \'c0\'cc\'c0\'fc \'c0\'da\'b7\'e1\'b8\'a6 \'bf\'ac\'b0\'e1\'c1\'f6\'be\'ee \'c3\'b3\'b8\'ae \'b0\'a1\'b4\'c9\par
+** dw\'b4\'c2 \'c0\'fa\'c0\'e5\'c0\'e5\'c4\'a1\'b8\'a6 \'ba\'f1\'b1\'b3\'c0\'fb \'c0\'fb\'b0\'d4 \'bb\'e7\'bf\'eb\'c7\'d2 \'bc\'f6\'c0\'d6\'b4\'d9(\'ba\'f1\'bf\'eb\'b9\'ae\'c1\'a6 \'c0\'fd\'be\'e0)\par
+** \'ba\'f2\'b5\'a5\'c0\'cc\'c5\'cd\'b4\'c2 \'b8\'b9\'c0\'ba \'c0\'fa\'c0\'e5\'c0\'e5\'c4\'a1\'b8\'a6 \'bf\'e4\'b1\'b8\'c7\'cf\'b9\'c7\'b7\'ce \'c0\'fa\'c0\'e5 \'c0\'e5\'c4\'a1\'b8\'a6 \'b0\'e8\'bc\'d3 \'bf\'ac\'b0\'e1\'c7\'d8\'be\'df \'c7\'d1\'b4\'d9.\par
+\par
+* Hive\par
+** \'b0\'e1\'b1\'b9 \'c7\'cf\'b5\'d3 \'bb\'e7\'bf\'eb\'c0\'da\'b5\'e9\'c0\'c7 \'bb\'e7\'bf\'eb \'c6\'ed\'c0\'c7\'bc\'ba\'c0\'bb \'b3\'f4\'bf\'a9\'c1\'dc\par
+** \'b1\'d7\'b7\'af\'b3\'aa MapReduce \'c7\'c1\'b7\'b9\'c0\'d3\'bf\'f6\'c5\'a9\'b8\'a6 \'bb\'e7\'bf\'eb\'c7\'cf\'b9\'c7\'b7\'ce \'bd\'c7\'c1\'fa\'c0\'fb\'c0\'ce \'b5\'a5\'c0\'cc\'c5\'cd \'ba\'d0\'bc\'ae \'bc\'d3\'b5\'b5\'bf\'a1\'b4\'c2 \'c5\'a9\'b0\'d4 \'bf\'b5\'c7\'e2\'c0\'bb \'c1\'d6\'c1\'f6 \'b8\'f8\'c7\'d4\par
+\par
+* PIG\par
+** Hive\'bf\'cd \'c0\'af\'bb\'e7\'c7\'cf\'b8\'e7 \'c0\'fd\'c2\'f7\'c7\'fc \'be\'f0\'be\'ee\'c0\'cc\'b0\'ed \'be\'df\'c8\'c4\'b0\'a1 \'b0\'b3\'b9\'df\par
+\tab\'c0\'fd\'c2\'f7\'c7\'fc \'be\'f0\'be\'ee ex) C\'be\'f0\'be\'ee\tab\'a1\'ea \'b0\'b4\'c3\'bc \'c1\'f6\'c7\'e2\'be\'f0\'be\'ee ex) \'c0\'da\'b9\'d9\par
+** pig\'b5\'b5 Hive\'c3\'b3\'b7\'b3 MapReduce\'b8\'a6 \'bb\'e7\'bf\'eb\'c7\'cf\'b9\'c7\'b7\'ce \'b5\'a5\'c0\'cc\'c5\'cd \'ba\'d0\'bc\'ae\'bc\'d3\'b5\'b5 \'c1\'f5\'c1\'f8\'bf\'a1\'b4\'c2 \'bf\'b5\'c7\'e2\'c0\'bb \'c1\'d6\'c1\'f6 \'b8\'f8\'c7\'d4\par
+** At the present time, Pig's infrastructure layer consists of a compiler that \cf1 produces sequences of Map-Reduce programs\cf0 , for which large-scale parallel implementations already exist (e.g., the Hadoop subproject).\par
+\par
+* HBase\par
+** Hive\'b0\'a1 \'c7\'cf\'c1\'f6 \'b8\'f8\'c7\'cf\'b4\'c2 \'c1\'d9\'ba\'b0 \'ba\'af\'b0\'e6\'c0\'db\'be\'f7, \'c6\'ae\'b7\'a3\'c0\'e8\'bc\'c7\'c0\'cc \'c7\'ca\'bf\'e4\'c7\'d2 \'b0\'e6\'bf\'ec \'c0\'fb\'c7\'d5\par
+** \'bd\'c7\'bd\'c3\'b0\'a3\'c0\'b8\'b7\'ce \'b5\'a5\'c0\'cc\'c5\'cd\'b8\'a6 \'c3\'b3\'b8\'ae\par
+** key-value \'b5\'a5\'c0\'cc\'c5\'cd \'b1\'e2\'b9\'dd\'c0\'b8\'b7\'ce R/W \'bc\'d3\'b5\'b5\'b0\'a1 \'ba\'fc\'b8\'a3\'b4\'d9\par
+** \'c0\'cf\'b9\'dd~\par
+\par
+* Impala\par
+** Hive\'c0\'c7 sql+\'bd\'c7\'bd\'c3\'b0\'a3 \'c3\'b3\'b8\'ae \'ba\'d0\'bb\'ea\'bf\'a3\'c1\'f8 \'bb\'e7\'bf\'eb\par
+\par
+* Spark\par
+** \'b9\'f6\'c5\'ac\'b8\'ae \'b4\'eb\'c7\'d0\'c0\'c7 AMP lab\'bf\'a1\'bc\'ad \'b8\'b8\'b5\'e7 In-Memory \'b1\'e2\'b9\'dd \'b5\'a5\'c0\'cc\'c5\'cd \'c3\'b3\'b8\'ae \'bf\'a3\'c1\'f8\par
+** Spark\'b4\'c2 File System\'bf\'a1\'bc\'ad\'b4\'c2 Hadoop, Amazon S3 \'b5\'ee\'c0\'c7 \'ba\'d0\'bb\'ea\'c6\'c4\'c0\'cf\'bd\'c3\'bd\'ba\'c5\'db \'bb\'e7\'bf\'eb\par
+** Spark\'b4\'c2 \'bc\'c5\'c7\'c3 \'c3\'b3\'b8\'ae \'b0\'e1\'b0\'fa\'b8\'a6 \'b5\'f0\'bd\'ba\'c5\'a9\'bf\'a1 \'c0\'fa\'c0\'e5\'c7\'cf\'c1\'f6 \'be\'ca\'b0\'ed \cf1\'b8\'de\'b8\'f0\'b8\'ae\cf0\'bf\'a1 \'c0\'fa\'c0\'e5\'c7\'cf\'bf\'a9 Read/Write \'bc\'d3\'b5\'b5\'b0\'a1 \'c7\'e2\'bb\'f3\'b5\'c8\'b4\'d9.\par
+** \'c7\'d1\'b8\'b6\'b5\'f0\'b7\'ce \'c1\'a4\'c0\'c7\'c7\'cf\'b8\'e9 \cf2\'c7\'cf\'b5\'d3\'bf\'a1\'bc\'ad \'b8\'ca\'b8\'ae\'b5\'e0\'bd\'ba \'ba\'ce\'ba\'d0\'c0\'bb \'b4\'eb\'c3\'bc\'c7\'d2 \'bc\'f6 \'c0\'d6\'b4\'c2 \'b0\'cd\cf0\par
+\par
+* (\'c2\'fc\'b0\'ed) Shark = Hive + Spark\par
+* R : \'c0\'da\'b7\'e1\'b0\'a1 \'c0\'db\'b0\'c5\'b3\'aa \'b5\'a5\'c0\'cc\'c5\'cd \'c3\'b3\'b8\'ae \'bd\'c3\'b0\'a3\'b0\'fa \'b9\'ab\'b0\'fc\'c7\'d2 \'b6\'a7 \'bb\'e7\'bf\'eb\par
+\tab\'a1\'e6 \'b4\'eb\'bf\'eb\'b7\'ae \'c3\'b3\'b8\'ae\'bf\'a1\'b4\'c2 \'ba\'d2\'c6\'ed\par
+\par
+* (\'c2\'fc\'b0\'ed) Hadoop vs Spark\par
+** Spark\'c0\'c7 File System \'bf\'a1\'bc\'ad Hadoop\'b8\'b8\'c0\'cc \'c7\'ca\'bf\'e4\'c3\'e6\'ba\'d0\'c1\'b6\'b0\'c7\'c0\'cc \'be\'c6\'b4\'cf\'b8\'e7 Hadoop\'b5\'b5 MapReduce \'ba\'ce\'ba\'d0\'bf\'a1\'bc\'ad Spark\'b0\'a1 \'c7\'ca\'bf\'e4\'c3\'e6\'ba\'d0\'c1\'b6\'b0\'c7\'c0\'cc \'be\'c6\'b4\'cf\'b4\'d9.\par
+** Hadoop\'c0\'ba \'c0\'fa\'b7\'c5\'c7\'d1 H/W \'ba\'f1\'bf\'eb\'c0\'b8\'b7\'ce \'b4\'dc\'b0\'e8\'c0\'fb \'c3\'b3\'b8\'ae \'b9\'e6\'b9\'fd\'c0\'bb \'c5\'c3\'c7\'cf\'b3\'aa Spark\'b4\'c2 \'b5\'bf\'bd\'c3\'c1\'f8\'c7\'e0\'b9\'e6\'bd\'c4\'c0\'b8\'b7\'ce \'c1\'f8\'c7\'e0\'c7\'cf\'b9\'c7\'b7\'ce Hadoop\'b0\'fa \'ba\'f1\'b1\'b3\'c7\'cf\'bf\'a9 10~100\'b9\'e8 \'c1\'a4\'b5\'b5 \'ba\'fc\'b8\'a3\'b4\'d9.\par
+** Spark\'b4\'c2 Hadoop \'bf\'a1 \'ba\'f1\'c7\'d8 \'bd\'c7\'bd\'c3\'b0\'a3\'c3\'b3\'b8\'ae\'b0\'a1 \'c7\'ca\'bf\'e4\'c7\'d1 \'c0\'db\'be\'f7\'c0\'cf \'b0\'e6\'bf\'ec \'bb\'e7\'bf\'eb\par
+** Spark\'b0\'a1 \'ba\'bb\'b7\'a1 Hadoop\'bf\'eb\'c0\'b8\'b7\'ce \'b3\'aa\'bf\'c2 \'b0\'cd\'c0\'cc\'b9\'c7\'b7\'ce Hadoop File System + Spark MapReduce\'c0\'cc\'b8\'e9 \'b9\'d9\'b6\'f7\'c1\'f7\'c7\'d1 \'b1\'b8\'bc\'ba\'c0\'cc\'b4\'d9.\par
+\par
+* (\'c2\'fc\'b0\'ed) Hive vs RDBMS \par
+\tab\'a1\'e6 RDBMS(relational database management system) ex) \'bf\'c0\'b6\'f3\'c5\'ac\par
+** Hive\'b4\'c2 Schema on Read \'b9\'e6\'bd\'c4\'c0\'b8\'b7\'ce \'ba\'f1\'c1\'a4\'c7\'fc\'b5\'a5\'c0\'cc\'c5\'cd\'bf\'a1 \'c0\'fb\'c7\'d5\'c7\'cf\'b5\'b5\'b7\'cf \'b5\'a5\'c0\'cc\'c5\'cd\'b8\'a6 \'b8\'d5\'c0\'fa \'c0\'d4\'b7\'c2\'c7\'d1 \'c8\'c4 \'c5\'d7\'c0\'cc\'ba\'ed\'c0\'cc \'ba\'af\'b0\'e6\'b5\'c7\'be\'ee\'b5\'b5 \'b9\'ae\'c1\'a6 \'be\'f8\'b4\'d9.\par
+** RDBMS\'b4\'c2 Schema on Write \'b9\'e6\'bd\'c4\'c0\'b8\'b7\'ce \'b9\'cc\'b8\'ae \'c1\'a4\'c0\'c7\'b5\'c8 \'c5\'d7\'c0\'cc\'ba\'ed \'bd\'ba\'c5\'b0\'b8\'b6\'bf\'a1 \'b8\'c2\'b0\'d4 \'c0\'da\'b7\'e1\'b0\'a1 \'c3\'b3\'b8\'ae\'b5\'c8\'b4\'d9.\par
+\par
+* Maria DB \'bc\'b3\'c4\'a1\par
+** MariaDB \'bc\'b3\'c4\'a1 \'b9\'d7 \'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5\'b4\'c2 \'b8\'ae\'b4\'aa\'bd\'ba \'c3\'a5 \'c2\'fc\'c1\'b6\'c7\'cf\'bf\'a9 \'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5, \'bc\'b3\'c4\'a1 \'b9\'d7 \'b9\'e6\'c8\'ad\'ba\'ae \'bc\'b3\'c1\'a4\'b1\'ee\'c1\'f6 \'b8\'b6\'c4\'a3\'b4\'d9.\par
+\par
+< Hive\'bf\'a1\'b0\'d4 \'b1\'c7\'c7\'d1\'c1\'d6\'b1\'e2 >\par
+* MariaDB \'b0\'a1\'b5\'bf \'bd\'c3\'c0\'db\par
+# mysqladmin -u root password '111111'\par
+\tab\'a1\'e6 admin \'c0\'cc\'b8\'a7\'c0\'cc root, password \'b4\'c2 '111111'\par
+# mysql -u root -p mysql\par
+\tab\'a1\'e6 \'b0\'a1\'b5\'bf\'c7\'cf\'b4\'c2 \'b8\'ed\'b7\'c9 -u root -p \'c0\'cc\'b8\'a7\par
+\tab MariaDB [mysql]> \par
+* Hive\'bf\'a1\'b0\'d4 \'b1\'c7\'c7\'d1 \'c1\'d6\'b1\'e2\par
+# grant all privileges on *.* to 'hive'@'localhost' identified by '111111';\par
+\tab Query OK, 0 rows affected (0.00 sec)\par
+\tab\'a1\'e6 hive user \'b9\'d7 \'c7\'d8\'b4\'e7 \'be\'cf\'c8\'a3\'b8\'a6 db\'bf\'a1 \'c3\'df\'b0\'a1\par
+# flush privileges;\par
+\tab Query OK, 0 rows affected (0.00 sec)\par
+\tab\'a1\'e6 \'ba\'af\'b0\'e6\'bb\'e7\'c7\'d7 \'c0\'fb\'bf\'eb\par
+\par
+* Hive_db \'bb\'fd\'bc\'ba\'c7\'cf\'b0\'ed hive\'bf\'a1\'b0\'d4 \'b1\'c7\'c7\'d1 \'c1\'d6\'b1\'e2\par
+# create database hive_db;\par
+\tab Query OK, 1 row affected (0.00 sec)\par
+# grant all privileges on hive_db.* to 'hive'@'%' identified by '111111' with grant option;\par
+\tab\'a1\'e6 %\'b4\'c2 ip address \'b8\'a6 \'bc\'b1\'be\'f0\'c7\'cf\'b4\'c2 \'c0\'da\'b8\'ae\'b7\'ce all\par
+# grant all privileges on hive_db.* to 'hive'@'localhost' identified by '111111' with grant option;\par
+\par
+# flush privileges;\par
+# commit;\par
+\par
+* hive_db \'bf\'ad\'b0\'ed \'c8\'ae\'c0\'ce\'c7\'cf\'b1\'e2\tab\par
+# quit\par
+\tab Bye\par
+\tab [root@hadoopserver ~]# \par
+# mysql -u hive -p hive_db;\par
+\tab MariaDB [hive_db]> \par
+# show databases;\par
+\par
+< Hive Install >\par
+* Hive install \'bd\'c3\'c0\'db\'c7\'cf\'b1\'e2 p564\par
+** \'c6\'c4\'c0\'cc\'be\'ee\'c6\'f8\'bd\'ba \'bf\'ad\'b1\'e2\par
+\tab{\field{\*\fldinst{HYPERLINK "http://archive.apache.org/dist/hive/hive-1.0.1/"}}{\fldrslt{\ul\cf3 http://archive.apache.org/dist/hive/hive-1.0.1/}}}\f0\fs20\par
+\tab apache-hive-1.0.1-bin.tar.gz \'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5\par
+\par
+* profile\'bf\'a1 hive_home PATH \'b8\'b8\'b5\'e9\'b1\'e2\par
+# quit \par
+\tab [root@hadoopserver ~]# \par
+\tab\'a1\'e6 \'c5\'cd\'b9\'cc\'b3\'ce\'c7\'c1\'b7\'d2\'c7\'c1\'c6\'ae\'b7\'ce \'b5\'b9\'be\'c6\'bf\'c2\'b4\'d9\par
+# cd\par
+# gedit /etc/profile\par
+\tab HADOOP_HOME \'be\'c6\'b7\'a1\'bf\'a1 HIVE_HOME \'c0\'bb \'c3\'df\'b0\'a1\'c7\'d1\'b4\'d9.\tab\par
+\tab\cf4 HIVE_HOME=/usr/local/hive\par
+\tab export HIVE_HOME\par
+\cf0\par
+* .profile\'bf\'a1 hive_home path \'b8\'b8\'b5\'e9\'b1\'e2\par
+** PATH\'bf\'a1\'b5\'b5 \'c3\'df\'b0\'a1\'c7\'d1\'b4\'d9. (/etc/profile)\par
+\tab PATH=$HADOOP_HOME/bin:$JAVA_HOME/bin\cf4 :$HIVE_HOME/bin\cf0 :$PATH\par
+\par
+# . /etc/profile\par
+\tab\'a1\'e6 [root@hadoopserver ~]# \'b0\'a1 \'b6\'df\'b8\'e9 \'b9\'ae\'c1\'a6\'be\'f8\'c0\'cc \'bc\'f6\'c7\'e0\'b5\'c8 \'b0\'cd\par
+\par
+==============================================\par
+\'bf\'c0\'c8\'c4 \'bc\'f6\'be\'f7\par
+=============================================\par
+\par
+* Hive \'be\'d0\'c3\'e0\'c0\'bb \'c7\'ae\'be\'ee HIVE_HOME \'c0\'a7\'c4\'a1\'b7\'ce \'ba\'b9\'bb\'e7 \'bc\'b3\'c4\'a1\'c7\'d1\'b4\'d9.\par
+** "\'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5" \'b9\'e6\'c0\'b8\'b7\'ce \'c0\'cc\'b5\'bf\'c7\'d1 \'c8\'c4 \'be\'d0\'c3\'e0\'c0\'bb \'c7\'ac\'b4\'d9.\par
+\tab [root@hadoopserver \'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5]# \par
+# tar xvf apache-hive-1.0.1-bin.tar.gz\par
+\par
+* /usr/local/hive \'b9\'e6\'c0\'b8\'b7\'ce \'ba\'b9\'bb\'e7\'c7\'d1\'b4\'d9.\par
+# cp -r apache-hive-1.0.1-bin /usr/local/hive\par
+\par
+* hive-site.xml \'bb\'fd\'bc\'ba\'c7\'cf\'b1\'e2 p568\par
+# cd /usr/local/hive\par
+\tab [root@hadoopserver hive]#\par
+# ls\par
+\tab LICENSE  README.txt         bin   examples  lib\par
+\tab NOTICE   RELEASE_NOTES.txt  conf  hcatalog  scripts\par
+# cd conf\par
+\cf4 # gedit hive-site.xml\cf0\par
+\tab [root@hadoopserver conf]#\par
+\par
+* hive-site.xml \'b3\'bb\'bf\'eb\par
+\tab p568 \'c2\'fc\'c1\'b6 (\'b4\'d9\'b8\'a5 \'ba\'ce\'ba\'d0 \'ea\'f3)\par
+\par
+< hive_stie \'b3\'bb\'bf\'eb \'bc\'b3\'b8\'ed >\par
+* hive.metastore.local\tab true\par
+** hive metastore\par
+\tab\'a1\'e6 \'c7\'cf\'c0\'cc\'ba\'ea\'c0\'c7 \'c6\'c4\'c6\'bc\'bc\'c7 \'b9\'d7 \'c5\'d7\'c0\'cc\'ba\'ed \'c1\'a4\'ba\'b8\'b0\'a1 \'b5\'e9\'be\'ee\'c0\'d6\'b4\'c2 \'b0\'f7\par
+** hive metastore\'bf\'a1 \'b5\'fb\'b6\'f3\par
+\tab\'a1\'e6  metadata\'b8\'a6 remote DB or local \'bf\'a1 \'c1\'a2\'bc\'d3\'c7\'cf\'bf\'a9 \'c0\'fa\'c0\'e5\'c7\'d2\'c1\'f6\'b0\'a1 \'b0\'e1\'c1\'a4\'b5\'ca\par
+\tab\'a1\'e6  \'b1\'e2\'ba\'bb\'b0\'aa\'c0\'ba true\'b7\'ce local \'be\'c6\'c6\'c4\'c4\'a1 \'b4\'f5\'ba\'f1\'b8\'a6 \'bb\'e7\'bf\'eb\par
+\tab\'a1\'e6  remote\'c0\'ce \'b0\'e6\'bf\'ec false\'b7\'ce \'bb\'e7\'bf\'eb\'b5\'c7\'b8\'e7 remote server\'bf\'a1 \'bc\'b3\'c4\'a1\'b5\'c8 metastore DB\'bf\'a1 \'c1\'a2\'bc\'d3\'c7\'d1\'b4\'d9.\par
+\par
+* javax.jdo.option.ConnectionURL\par
+** meta data\'b0\'a1 \'b5\'e9\'be\'ee\'c0\'d6\'b4\'c2 \'b5\'a5\'c0\'cc\'c5\'cd\'ba\'a3\'c0\'cc\'bd\'ba \'c1\'a2\'bc\'d3 \'b0\'fc\'b7\'c3 \'b3\'bb\'bf\'eb\'c0\'b8\'b7\'ce metastore DB\'bf\'a1 \'c1\'a2\'bc\'d3\'c7\'cf\'b1\'e2 \'c0\'a7\'c7\'d1 connection string \'b0\'aa\par
+** (\'bf\'b9) jdbc:mariadb://localhost:3306/hive_db?createDatabaseIfNotExist=true\par
+** \'b1\'e2\'ba\'bb\'b0\'aa\'c0\'ba\par
+\tab jdbc:derby::databaseName=metastore_db;create=true\par
+\par
+* javax.jdo.iption.ConnectionDriverName\par
+** JDBC driver \'c0\'cc\'b8\'a7\'c0\'b8\'b7\'ce metastore DB\'bf\'a1 \'c1\'a2\'b1\'d9\'c7\'d2 \'b6\'a7 \'bb\'e7\'bf\'eb\'c7\'d2 JDBC driver\par
+** (\'bf\'b9) org.mariadb.jdbc.Driver\par
+** \'b1\'e2\'ba\'bb \'b5\'e5\'b6\'f3\'c0\'cc\'b9\'f6\'b4\'c2\par
+\tab org.apache.derby.jdbc.EmbeddedDriver\par
+\par
+* javax.jdo.option.ConnectionUserName\par
+** metastore DB\'bf\'a1 \'b7\'ce\'b1\'d7\'c0\'ce\'c7\'cf\'b4\'c2 \'bb\'e7\'bf\'eb\'c0\'da\'b8\'ed\par
+** \'b1\'e2\'ba\'bb\'b0\'aa\'c0\'ba APP\par
+\par
+* javax.jdo.iption.ConnectionPassword\par
+** Metastore DB\'bf\'a1 \'b7\'ce\'b1\'d7\'c0\'ce\'c7\'cf\'b4\'c2 \'be\'cf\'c8\'a3\par
+** \'b1\'e2\'ba\'bb\'b0\'aa\'c0\'ba mine\par
+\par
+\par
+\par
+< hive\'c0\'c7 \'c0\'da\'b7\'e1\'c7\'fc >\par
+* BOOLEAN \'a1\'e6 \'b4\'eb\'bc\'d2\'b9\'ae\'c0\'da \'b1\'b8\'ba\'d0 \'be\'c8\'c7\'d4\par
+* TINYINT : \'c0\'da\'b9\'d9\'c0\'c7 byte\'c7\'fc\par
+* SMALLINT : short\par
+* INT : int\par
+* BIGINT : long\par
+* FLOAT : float\par
+* DOUBLE : double\par
+* DECIMAL : \'c0\'d3\'c0\'c7\'c1\'a4\'b9\'d0\'b5\'b5 \'bc\'f6(35.0, -100.7 \'b5\'ee)\par
+* STRING : \'c1\'a6\'c7\'d1\'be\'f8\'b4\'c2 \'b1\'e6\'c0\'cc \'b0\'a1\'c1\'f8 \'b9\'ae\'c0\'da\'bf\'ad\par
+\tab ("BABO" 'ONDAL')\par
+* TIMESTAMP : \'bd\'c3\'b0\'a3 (1970\'b3\'e2 1\'bf\'f9 1\'c0\'cf\'ba\'ce\'c5\'cd..)\par
+* BINARY : \'b9\'d9\'c0\'cc\'c6\'ae \'b9\'e8\'bf\'ad\par
+* MAP : key-value\par
+* ARRAY : \'b9\'e8\'bf\'ad\par
+* STRUCT : \'b1\'b8\'c1\'b6\'c3\'bc\par
+\par
+< Hive Install >\par
+* Mariadb JDBC-API\'b8\'a6 \'b9\'de\'be\'c6 hive\'c0\'c7 lib\'bf\'a1 \'ba\'b9\'bb\'e7\'c7\'d1\'b4\'d9.\par
+# cp mariadb-java-client-1.3.5.jar /usr/local/hive/lib\par
+\par
+hive\'bf\'cd hadoop \'bf\'ac\'b0\'e1\'c0\'bb \'c0\'a7\'c7\'d8 \'c7\'cf\'b5\'d3\'bf\'a1\'bc\'ad \'c8\'b0\'b5\'bf\'c7\'d2 hive \'c6\'fa\'b4\'f5\'b8\'a6 \'b8\'b8\'b5\'e7\'b4\'d9\par
+# cd /usr/local/hive/lib\par
+#ls\par
+\tab\'a1\'e6 .jar \'c6\'c4\'c0\'cf \'c8\'ae\'c0\'ce\par
+hadoop dfs -mkdir /tmp/root\par
+hadoop dfs -mkdir /tmp/hive\par
+#hadoop dfs -lsr /tmp\par
+\tab\'a1\'e6 \'b8\'b8\'b5\'e9\'be\'ee\'c1\'f8 \'b0\'cd \'c8\'ae\'c0\'ce\par
+\par
+# hadoop dfs -mkdir /user/root/warehouse\par
+# hadoop dfs -lsr /user\par
+\tab\par
+* /tmp/root /tmp/hive \'b1\'c7\'c7\'d1\'c0\'bb writable\'b7\'ce \'ba\'af\'b0\'e6\'c7\'d4\par
+# hadoop fs -chmod 777 /tmp/root\par
+# hadoop fs -chmod 777 /tmp/hive\par
+\par
+* hive \'c1\'a2\'bc\'d3\'c0\'bb \'c0\'d4\'b7\'c2\'c7\'cf\'b8\'e9 \'c0\'e1\'bd\'c3 \'c8\'c4 hive> \'c7\'c1\'b7\'d2\'c7\'c1\'c6\'ae\'b0\'a1 \'b6\'e1\'b4\'d9\par
+# hive\par
+\tab hive>\par
+# show databases;\par
+** \'c1\'be\'b7\'e1 \'b8\'ed\'b7\'c9\par
+\tab # exit;\par
+\tab (cf. mariadb\'b4\'c2 quit)\par
+** \'c8\'ad\'b8\'e9 \'c5\'ac\'b8\'ae\'be\'ee\'b4\'c2\par
+\tab # !clear;\par
+\par
+* \'b8\'b9\'c0\'cc \'b3\'aa\'b4\'c2 \'bf\'a1\'b7\'af\par
+1) hive-site.xml\par
+\tab\'c0\'a7\'c4\'a1\'b0\'a1 conf \'c0\'ce\'c1\'f6\par
+\tab src \'c0\'d4\'b7\'c2\'c0\'cc \'b8\'c2\'b4\'c2\'c1\'f6\par
+2) mariadb...jar \'b0\'a1\par
+\tab /usr/local/hive/lib \'bf\'a1 \'c0\'d6\'b4\'c2\'c1\'f6\par
+\par
+# exit;\par
+\par
+* (\'c2\'fc\'b0\'ed) hive\'bf\'a1\'bc\'ad \'c5\'d7\'c0\'cc\'ba\'ed\'b8\'ed, \'c4\'ae\'b7\'b3\'b8\'ed \'b6\'e7\'bf\'ec\'b1\'e2\par
+# hive\par
+\tab hive>\par
+> set hive.cli.print.header=true;\par
+\par
+\par
+* hive \'c1\'a2\'bc\'d3 \'c8\'c4 \'c5\'d7\'c0\'cc\'ba\'ed \'b8\'b8\'b5\'e9\'b1\'e2\par
+> create table test (key int, value string);\par
+\tab ok\par
+\tab Time taken: 1.279 seconds\par
+\par
+> show tables;\par
+\tab\'a1\'e6 \'c5\'d7\'c0\'cc\'ba\'ed \'c8\'ae\'c0\'ce\par
+\tab OK\par
+\tab tab_name\par
+\tab test\par
+\tab Time taken: 0.104 seconds, Fetched: 1 row(s)\par
+\par
+> desc Test;\par
+\tab\'a1\'e6 Test \'c5\'d7\'c0\'cc\'ba\'ed \'b1\'b8\'c1\'b6 \'c8\'ae\'c0\'ce\par
+> exit;\par
+\par
+< Hive MapReduce >\par
+* HiveQL\'b9\'ae\'c0\'bb \'bb\'e7\'bf\'eb\'c7\'cf\'bf\'a9 Hive table\'bf\'a1 \'b5\'a5\'c0\'cc\'c5\'cd \'b7\'ce\'b5\'e5\'c7\'cf\'b1\'e2\par
+** cd~ \'b8\'a6 \'c0\'d4\'b7\'c2\'c7\'cf\'bf\'a9 \'bf\'b9\'b8\'a6 \'b5\'e9\'be\'ee root \'b9\'e6\'c0\'b8\'b7\'ce \'b0\'a1\'bc\'ad input.txt\'b8\'a6 \'b8\'b8\'b5\'e7\'b4\'d9.\par
+# gedit input.txt\par
+\tab 1 love\par
+\tab 2 liebe\par
+\par
+** (\'b9\'e6\'b9\'fd) input.txt \'c6\'c4\'c0\'cf\'c0\'bb test \'c5\'d7\'c0\'cc\'ba\'ed\'bf\'a1 load \'c7\'d1\'b4\'d9.\par
+# hive\par
+> load data local inpath '/root/input.txt' into table test;\par
+\tab Loading data to table default.test\par
+\tab Table default.test stats: [numFiles=1, totalSize=57]\par
+\tab OK\par
+\tab Time taken: 1.008 seconds\par
+\par
+** (mapreduce \'b0\'e1\'b0\'fa)\par
+> select * from test limit 5;\par
+\par
+\par
+\par
+\par
+\par
+< HIVE \'c8\'b0\'bf\'eb\'c7\'cf\'b1\'e2 > (airline_delay \'c1\'df\'bd\'c9) p138(\'c7\'cf\'b5\'d3\'b0\'fa \'c0\'da\'b9\'d9\'b7\'ce \'c3\'b3\'b8\'ae), 571(\'c7\'cf\'c0\'cc\'ba\'ea \'c3\'b3\'b8\'ae \'c6\'f7\'c7\'d4)\par
+* \'b9\'cc\'b1\'b9 \'c7\'d7\'b0\'f8 \'bf\'ee\'c7\'d7\'c1\'f6\'bf\'ac \'b0\'fc\'b7\'c3 \'b5\'a5\'c0\'cc\'c5\'cd \'ba\'d0\'bc\'ae\'c0\'bb \'c0\'a7\'c7\'d1 \'b5\'a5\'c0\'cc\'c5\'cd download \'bb\'e7\'c0\'cc\'c6\'ae\par
+** \'c6\'c4\'c0\'cc\'be\'ee\'c6\'f8\'bd\'ba\par
+{\field{\*\fldinst{HYPERLINK "http://stat-computing.org/dataexpo/2009/the-data.html"}}{\fldrslt{\ul\cf3 http://stat-computing.org/dataexpo/2009/the-data.html}}}\f0\fs20\par
+\'a1\'e6 \'bf\'a9\'b1\'e2\'bc\'ad 1987~2008\'b3\'e2 \'bb\'e7\'c0\'cc\'c0\'c7 \'b9\'cc\'b1\'b9 \'b8\'f0\'b5\'e7 \'bb\'f3\'be\'f7\'c7\'d7\'b0\'f8\'c6\'ed\'bf\'a1 \'b4\'eb\'c7\'d1 \'c7\'d7\'b0\'f8\'c6\'ed \'b5\'b5\'c2\'f8\'b0\'fa \'c3\'e2\'b9\'df\'bf\'a1 \'b4\'eb\'c7\'d1 \'c1\'a4\'ba\'b8\'b8\'a6 \'be\'f2\'c0\'bb \'bc\'f6 \'c0\'d6\'b4\'d9.\par
+\par
+** \'c0\'d3\'c0\'c7\'c0\'c7 \'bf\'ac\'b5\'b5 ex)1991\'b3\'e2 \'b8\'a6 \'b4\'ad\'b7\'af \'c0\'fa\'c0\'e5\'c6\'c4\'c0\'cf(save file)\'b7\'ce \'c0\'da\'b7\'e1\'b8\'a6 \'b4\'d9\'bf\'ee\'b9\'de\'b4\'c2\'b4\'d9.\par
+\tab - (\'c2\'fc\'b0\'ed) \'b4\'d9\'bf\'ee\'b5\'c7\'b4\'c2 \'c0\'da\'b7\'e1\'c0\'c7 \'c0\'cc\'b8\'a7\'c0\'ba 1991\'b3\'e2\'c0\'c7 \'b0\'e6\'bf\'ec 1991.csv.bz2\par
+\par
+* [...\'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5] \'b9\'e6\'c0\'b8\'b7\'ce \'b0\'a1\'bc\'ad 1991.csv.bz2 \'be\'d0\'c3\'e0 \'c7\'ae\'b1\'e2\par
+# ls -l *.bz2\par
+\tab -rw-r--r-- 1 root root 49877448  3\'bf\'f9 12 15:40 1991.csv.bz2\par
+\par
+# bzip2 -d *.bz2\par
+# ls -l 1991.*\par
+# head -7 1991.csv\par
+\pard\li720\sa200\sl276\slmult1 1991,1,1,2,1709,1705,1944,1944,US,112,NA,155,159,NA,0,4,TPA,SYR,1104,NA,NA,0,NA,0,NA,NA,NA,NA,NA\par
+\tab\'a1\'e6 \'c4\'ae\'b7\'b3 \'c1\'a4\'ba\'b8\'b4\'c2 \'c4\'de\'b8\'b6\'b8\'a6 \'b1\'e2\'c1\'d8\'c0\'b8\'b7\'ce \'b1\'b8\'ba\'d0\par
+\pard\sa200\sl276\slmult1 * \'b0\'a2 \'c4\'ae\'b7\'b3\'c0\'c7 \'c0\'c7\'b9\'cc p139\par
+\par
+* airline_delay \'c5\'d7\'c0\'cc\'ba\'ed \'b8\'b8\'b5\'e9\'b1\'e2 p571\par
+\tab airline_createTable.txt\par
+\tab # hive\par
+\tab > txt \'b3\'bb\'bf\'eb \'ba\'b9\'ba\'d9\par
+> desc airline_delay;\par
+> exit;\par
+\par
+* airline_delay TABLE \'c2\'fc\'b0\'ed p572\par
+** COMMENT\par
+** PARTITIONED BY (delayYear INT)\par
+\tab - Query \'b9\'ae\'c0\'e5 \'bc\'f6\'c7\'e0 \'bc\'d3\'b5\'b5\'b8\'a6 \'c0\'a7\'c7\'d8 \'c5\'d7\'c0\'cc\'ba\'ed \'c6\'c4\'c6\'bc\'bc\'c7 \'bc\'b3\'c1\'a4\'c7\'cf\'b1\'e2( delayYear\'b4\'c2 \'c6\'c4\'c6\'bc\'bc\'c7 key)\par
+\tab # cd /usr/local/hive\par
+\tab # hadoop dfs -ls /user/hive/warehouse/airline_delay\par
+** ROW FORMAT\par
+\tab - \'c7\'ca\'b5\'e5\'b8\'a6 \'c4\'c4\'c6\'c4(,)\'b7\'ce \'b1\'b8\'ba\'d0\par
+\tab - \'c7\'e0\'c0\'c7 \'b1\'b8\'ba\'d0\'c0\'ba \\n\par
+** STORED AS\par
+\tab - \'b5\'a5\'c0\'cc\'c5\'cd \'c0\'fa\'c0\'e5 \'c6\'c4\'c0\'cf \'c7\'fc\'bd\'c4\par
+\tab TEXTFILE : \'c5\'d8\'bd\'ba\'c6\'ae \'c6\'c4\'c0\'cf\par
+\tab SEQUENCEFILE : \'bd\'c3\'c4\'f6\'bd\'ba \'c6\'c4\'c0\'cf\par
+\par
+\par
+# hive\par
+> show tables;\par
+> exit;\par
+# cp -r /root/\'b4\'d9\'bf\'ee\'b7\'ce\'b5\'e5/1991.csv /usr/local/hive\par
+# cd usr/local/hive\par
+\par
+* (\'c2\'fc\'b0\'ed) 1st \'c1\'d9 \'c4\'ae\'b7\'b3\'b8\'ed \'bb\'e8\'c1\'a6\par
+# sed -e '1d' 1991.csv > 1991_del_1st.csv\par
+\par
+airline_delay TABLE\'bf\'a1 1991_del)1st.csv \'c0\'da\'b7\'e1 \'b3\'d6\'b1\'e2\par
+# hive\par
+> load data local inpath './1991_del_1st.csv' overwrite into table airline_delay partition (delayYear='1991');\par
+\par
+> select * from airline_Delay where delayYear='1991' limit 5;\par
+\tab OK\par
+\pard\li720\sa200\sl276\slmult1 1991\tab 1\tab 1\tab 2\tab 1709\tab 1705\tab 1944\tab 1944\tab US\tab 112\tab NA\tab 155\tab 159\tab NULL\tab 0\tab 4\tab TPA\tab SYR\tab 1104\tab NULL\tab NULL\tab 0\tab NA\tab 0\tab NA\tab NA\tab NA\tab NA\tab NA\tab 1991\par
+\pard\sa200\sl276\slmult1\tab Time taken: 0.95 seconds, Fetched: 5 row(s)\par
+\par
+* 1991\'b3\'e2 \'c1\'f6\'bf\'ac \'b0\'c7\'bc\'f6 \'b1\'b8\'c7\'cf\'b1\'e2\par
+> select count(1) from airline_delay where delayYear=1991;\par
+\par
+* hive\'bf\'a1\'bc\'ad \'c5\'d7\'c0\'cc\'ba\'ed\'b8\'ed. \'c4\'ae\'b7\'b3\'b8\'ed \'b6\'e7\'bf\'ec\'b1\'e2\par
+> set hive.cli.print.header=ture;\par
+\par
+* 1991\'b3\'e2 1\'bf\'f9~12\'bf\'f9\'b1\'ee\'c1\'f6\'c0\'c7 (\'b3\'e2\'b5\'b5\'ba\'b0, \'bf\'f9\'ba\'b0) \'b5\'b5\'c2\'f8 \'c1\'f6\'bf\'ac \'b0\'c7\'bc\'f6 \'b1\'b8\'c7\'cf\'b1\'e2\par
+> select year, month, count(*) as arrive_delay_count\par
+> from airline_delay\par
+> where delayyear=1991\par
+> and arrdelay > 0\par
+> group by year, month;\par
+\tab\par
+\par
+\par
+\par
+}
+ 

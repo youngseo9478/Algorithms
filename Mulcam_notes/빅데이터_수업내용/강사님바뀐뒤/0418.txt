@@ -1,0 +1,285 @@
+0418
+RDD는 데이터베이스 테이블처럼 스키마같은게 없다. 그래서 스파크 SQL에서는 DataFrame이라는 스키마를 갖는 자료형을 RDD대신에 사용
+RDD는 명확한 타입이 존재하고 DataFrame은 좀 다르다.
+RDD는 스파크의 핵심적인 데이터 구조고
+DataFrame에서 RDD의 데이터 구조를 개선시켰고
+DataSet이 새롭게 중심이 되는 데이터구조가 되고 있는 상황이다.
+
+scala> val df1 = spark.read.text("file:///home/hadoop/dept.csv")
+2018-04-18 09:01:34 ERROR ObjectStore:6684 - Version information found in metastore differs 2.3.0 from expected schema version 1.2.0. Schema verififcation is disabled hive.metastore.schema.verification so setting version.
+2018-04-18 09:01:40 WARN  ObjectStore:568 - Failed to get database global_temp, returning NoSuchObjectException
+df1: org.apache.spark.sql.DataFrame = [value: string]
+
+scala>
+
+scala> df1.show
++--------------------+
+|               value|
++--------------------+
+|10,ACCOUNTING,NEW...|
+|  20,RESEARCH,DALLAS|
+|    30,SALES,CHICAGO|
+|40,OPERATIONS,BOSTON|
++--------------------+
+
+scala> case class Person(name: String, age: Int, job: String)
+defined class Person
+
+scala> val row1 = Person("Kwon", 30, "NONE")
+row1: Person = Person(Kwon,30,NONE)
+
+scala> val row2 = Person("Hong", 34, "STUDENT")
+row2: Person = Person(Hong,34,STUDENT)
+
+scala> val row3 = Person("Kang", 27, "STUDENT")
+row3: Person = Person(Kang,27,STUDENT)
+
+scala> val row4 = Person("Park", 29, "EMPLOYEE")
+row4: Person = Person(Park,29,EMPLOYEE)
+
+scala> val data = List(row1,row2,row3,row4)
+data: List[Person] = List(Person(Kwon,30,NONE), Person(Hong,34,STUDENT), Person(Kang,27,STUDENT), Person(Park,29,EMPLOYEE))
+
+scala> data.foreach(println)
+Person(Kwon,30,NONE)
+Person(Hong,34,STUDENT)
+Person(Kang,27,STUDENT)
+Person(Park,29,EMPLOYEE)
+
+
+
+로컬에 있는 데이터를 RDD로 만들어주는 것 sc.parallelize()
+
+scala> val Rdd = sc.parallelize(data)
+Rdd: org.apache.spark.rdd.RDD[Person] = ParallelCollectionRDD[0] at parallelize at <console>:26
+
+로컬에 있는 데이터를 DataFrame으로 만들어주는 것 spark.createDataFrame()
+
+scala> val df2 = spark.createDataFrame(data)
+df2: org.apache.spark.sql.DataFrame = [name: string, age: int ... 1 more field]
+
+로컬에 있는 데이터를 DataSet으로 만들어주는 것 spark.createDataset()
+
+
+scala> df2.show
++----+---+--------+
+|name|age|     job|
++----+---+--------+
+|Kwon| 30|    NONE|
+|Hong| 34| STUDENT|
+|Kang| 27| STUDENT|
+|Park| 29|EMPLOYEE|
++----+---+--------+
+
+RDD를 DF로 변환시켜주기
+scala> val df3 = Rdd.toDF
+df3: org.apache.spark.sql.DataFrame = [name: string, age: int ... 1 more field]
+
+SQL구문을 쓰고싶다!라고 할 때 방법
+
+scala> df3.createOrReplaceTempView("pers") ("")안의 값은 일종의 테이블이름을 지어주는 것
+
+scala> spark.sql("select name,age from pers where age > 30").show
++----+---+
+|name|age|
++----+---+
+|Hong| 34|
++----+---+
+
+여러가지 where절을 쓰는 법
+
+scala> df3.where(col("age") > 30)
+res7: org.apache.spark.sql.Dataset[org.apache.spark.sql.Row] = [name: string, age: int ... 1 more field]
+
+scala> res7.show
++----+---+-------+
+|name|age|    job|
++----+---+-------+
+|Hong| 34|STUDENT|
++----+---+-------+
+
+
+scala> df3.where(df3("age") > 30).show
++----+---+-------+
+|name|age|    job|
++----+---+-------+
+|Hong| 34|STUDENT|
++----+---+-------+
+
+scala> df3.where('age>30).show
++----+---+-------+
+|name|age|    job|
++----+---+-------+
+|Hong| 34|STUDENT|
++----+---+-------+
+
+scala> df3.select('age+1).show
++---------+
+|(age + 1)|
++---------+
+|       31|
+|       35|
+|       28|
+|       30|
++---------+
+
+scala> textFile.head
+res12: org.apache.spark.sql.Row = [Project Gutenberg's The Night the Mountain Fell, by Edmund Christopherson]
+
+scala> textFile.printSchema
+root
+ |-- value: string (nullable = true)
+
+
+scala> textFile.select("value")
+res14: org.apache.spark.sql.DataFrame = [value: string]
+
+
+scala> textFile.select(split(col("value"), " ")).head
+res18: org.apache.spark.sql.Row = [WrappedArray(Project, Gutenberg's, The, Night, the, Mountain, Fell,, by, Edmund, Christopherson)]
+
+scala> textFile.select(split(col("value"), " ")).printSchema
+root
+ |-- split(value,  ): array (nullable = true)
+ |    |-- element: string (containsNull = true)
+
+
+scala> textFile.select(explode(split(col("value"), " "))).head
+res20: org.apache.spark.sql.Row = [Project]
+
+scala> textFile.select(explode(split(col("value"), " "))).printSchema
+root
+ |-- col: string (nullable = true)
+
+
+scala> textFile.select(explode(split(col("value"), " "))).groupBy("col").count
+res22: org.apache.spark.sql.DataFrame = [col: string, count: bigint]
+
+scala> textFile.select(explode(split(col("value"), " "))).groupBy("col").count.orderBy("count").take(10)
+res23: Array[org.apache.spark.sql.Row] = Array([working,,1], [eggs,,1], [pools,1], [cot,,1], [travel,1], [wife.,1], [lights,,1], [skidded,1], [precautionary,1], [ferried,1])
+
+scala> textFile.select(explode(split(col("value"), " "))).groupBy("col").count.orderBy(desc("count")).take(10)
+res25: Array[org.apache.spark.sql.Row] = Array([,4825], [the,1677], [of,669], [and,566], [to,469], [in,376], [a,375], [was,188], [that,168], [The,168])
+
+
+파일을 데이터셋으로 읽어오는 법 textFile로 읽어온다.
+scala> val ds = spark.read.textFile("file:///home/hadoop/emp.csv")
+ds: org.apache.spark.sql.Dataset[String] = [value: string]
+
+scala> val ds = spark.read.textFile("file:///home/hadoop/emp.csv")
+ds: org.apache.spark.sql.Dataset[String] = [value: string]
+
+scala> val ds2 = data.toDS
+ds2: org.apache.spark.sql.Dataset[Person] = [name: string, age: int ... 1 more field]
+
+scala> ds2.printSchema
+root
+ |-- name: string (nullable = true)
+ |-- age: integer (nullable = false)
+ |-- job: string (nullable = true)
+
+
+파일에 있는 스키마 읽어와서 가져오기
+
+scala> import org.apache.spark.sql.Encoders
+import org.apache.spark.sql.Encoders
+
+scala> case class Dept(deptno :Int, dname :String, dloc :String)
+defined class Dept
+
+scala> val deptSchema = Encoders.product[Dept].schema
+deptSchema: org.apache.spark.sql.types.StructType = StructType(StructField(deptno,IntegerType,false), StructField(dname,StringType,true), StructField(dloc,StringType,true))
+
+scala> val dept = spark.read.schema(deptSchema).csv("file:///home/hadoop/dept.csv")
+dept: org.apache.spark.sql.DataFrame = [deptno: int, dname: string ... 1 more field]
+
+scala> dept.printSchema
+root
+ |-- deptno: integer (nullable = true)
+ |-- dname: string (nullable = true)
+ |-- dloc: string (nullable = true)
+
+
+scala> case class Emp(empno :Int, ename: String, job:String, mgr: Int, hiredate: String, sal: Int, comm: Int, deptno: Int)
+defined class Emp
+
+scala> val empSchema = Encoders.product[Emp].schema
+empSchema: org.apache.spark.sql.types.StructType = StructType(StructField(empno,IntegerType,false), StructField(ename,StringType,true), StructField(job,StringType,true), StructField(mgr,IntegerType,false), StructField(hiredate,StringType,true), StructField(sal,IntegerType,false), StructField(comm,IntegerType,false), StructField(deptno,IntegerType,false))
+
+scala> val emp = spark.read.schema(empSchema).csv("file:///home/hadoop/emp.csv")
+emp: org.apache.spark.sql.DataFrame = [empno: int, ename: string ... 6 more fields]
+
+scala> emp.printSchema
+root
+ |-- empno: integer (nullable = true)
+ |-- ename: string (nullable = true)
+ |-- job: string (nullable = true)
+ |-- mgr: integer (nullable = true)
+ |-- hiredate: string (nullable = true)
+ |-- sal: integer (nullable = true)
+ |-- comm: integer (nullable = true)
+ |-- deptno: integer (nullable = true)
+
+
+scala> val emp2 = emp.groupBy("deptno").sum("sal")
+emp2: org.apache.spark.sql.DataFrame = [deptno: int, sum(sal): bigint]
+
+scala> emp2.show
++------+--------+
+|deptno|sum(sal)|
++------+--------+
+|    20|   10875|
+|    10|    8750|
+|    30|    9400|
++------+--------+
+
+
+
+scala> val result = emp2.join(dept, Seq("deptno"))
+result: org.apache.spark.sql.DataFrame = [deptno: int, sum(sal): bigint ... 2 more fields]
+
+scala> result.show
++------+--------+----------+--------+
+|deptno|sum(sal)|     dname|    dloc|
++------+--------+----------+--------+
+|    20|   10875|  RESEARCH|  DALLAS|
+|    10|    8750|ACCOUNTING|NEW YORK|
+|    30|    9400|     SALES| CHICAGO|
++------+--------+----------+--------+
+
+
+또다른 실습 
+scala-logging_2.11-3.5.0.jar
+seunjeon_2.11-1.3.1.jar
+spark-nkp_2.11-0.3.3.jar
+를 우선 확보
+하둡 유저에 넣어준 다음
+[hadoop@s1 ~]$ mv scala-logging_2.11-3.5.0.jar /data/hadoop/spark-2.3.0-bin-hadoop2.7/jars
+[hadoop@s1 ~]$ mv spark-nkp_2.11-0.3.3.jar /data/hadoop/spark-2.3.0-bin-hadoop2.7/jars
+[hadoop@s1 ~]$ mv seunjeon_2.11-1.3.1.jar /data/hadoop/spark-2.3.0-bin-hadoop2.7/jars
+
+정확히는 SPARK_HOME의 jars 폴더에 넣어주는 것임 spark 라이브러리를 추가하는 것
+
+import org.apache.spark.ml.Pipeline
+import org.apache.spark.ml.feature.{CountVectorizer, IDF}
+import com.github.uosdmlab.nkp.Tokenizer
+
+val text = spark.read.textFile("file:///home/hadoop/tmp").toDF("text")
+
+val tokenizer = new Tokenizer().setInputCol("text").setOutputCol("words").setFilter("N")
+
+val cntVec = new CountVectorizer().setInputCol("words").setOutputCol("tf")
+
+val idf = new IDF().setInputCol("tf").setOutputCol("tfidf")
+
+val pipe = new Pipeline().setStages(Array(tokenizer, cntVec, idf))
+
+val pipeModel = pipe.fit(df)
+
+val result = pipeModel.transform(df)
+
+result.show
+
+내가 만든 다른 파일로 해봅시당
+val text = spark.read.textFile("file:///home/hadoop/testFile").toDF("text")
+

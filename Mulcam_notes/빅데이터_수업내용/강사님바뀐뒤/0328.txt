@@ -1,0 +1,81 @@
+0328
+Shell : 명령어 해석기
+쉘프로그래밍 : 명령어들을 조합해서 만드는 프로그램
+
+
+sublime text3
+package controller 설치
+
+import urllib.request,os,hashlib; h = '6f4c264a24d933ce70df5dedcf1dcaee' + 'ebe013ee18cced0ef93d5f746d80ef60'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)
+
+사용법
+ctrl+shift+P
+제공하는 기능들을 보여줌 옆에 단축키도 보여줌
+
+기능들 중에 pci로 검색해서 install package를 실행
+좀 기다리면 새창 뜸
+여기서 emmet검색해서 설치
+
+FTP 서버 사용하기
+File메뉴 SFTP/FTP 탭에서 셋업 서버로 들어감
+    "type": "sftp",
+
+    "sync_down_on_open": true,
+    "sync_same_age": true,
+    
+    "host": "192.168.111.201",
+    "user": "root",
+    "password":	 "admin",
+    "port": "22",
+    
+    "remote_path": "/root",
+요놈들만 바꿔줌
+
+s1서버 edit하기
+File메뉴 SFTP/FTP 탭에서 브라우즈 서버로 들어감
+그러면 저장해둔 서버를 선택할 수 있음
+그러면 /root아래 파일시스템이 뜸
+거기서/bin을 누르고 파일을 누르고 edit을 누르면 수정이 가능함
+파일 edit에서 가장 첫 줄에 주석에 !를 넣고 경로를 넣어주면 실행할 때 어떤 파일로 실행하나 알 수 있다.
+#!/bin/bash
+#!/usr/bin/python
+과 같이 해당 프로그램으로 이 프로그램을 실행해라라는 것임
+
+세팅 바꾸기
+preferance 들어가서 세팅을 들어가면 우측은 기본 세팅 좌측이 커스텀 세팅
+좌측에 우측에 있는 변수를 입력하고 변경하면 오버라이딩이 되는 형식
+형식은 json
+
+limetext3에서 파일 안에 스크립트를 적으면 자동화가 가능하다.
+
+
+
+여러 서버에 자바올리기
+rpm -qa | grep java-1.8.0-openjdk-devel
+yum -y install java-1.8.0-openjdk-devel
+yum -y install jna
+which 실행파일 명 = 실행파일 위치 알려줌
+ls -als /usr/bin/javac
+0 lrwxrwxrwx. 1 root root 23 Mar 28 22:05 /usr/bin/javac(하늘색) -> /etc/alternatives/javac
+/usr/bin/javac는 링크파일. 저 위치로 연결되있는거임
+
+x='ls -als /usr/bin/javac'
+echo $x | awk '{ print $1 }'
+
+FileZilla(FTP서비스)
+호스트에 리눅스 서버 주소, 사용자에 이름, 비번에 비번 포트에 22(ssh)로 통신
+
+
+
+
+RAID 레이드
+오류를 대비하는거 데이터를 안전하게 유지하기 위해 복제하는 것
+파일에 대해서 오류가 정정이 가능하게 패리티비트와 비슷한 것을 붙임
+파일의 한 부분이 빠져도 원본을 복구할 수 있는 이레이져 코딩
+
+
+
+최소 분산시스템이 10대 정도 있어야 속도가 1대보다 더 빠름
+하둡의 장점은 전문장치가 없어도 그냥 일반적인 장비로도 돌아간다.
+TCP의 연결성 - 3핸드쉐이크 무조건 한번 보냈던 방향으로 순서대로 받는다
+UDP의 비연결성 - 순서도 없고 받았는지 확인도 없고 걍 막 보낸다.
